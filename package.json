@@ -1,0 +1,13 @@
+{
+  "name": "shopping-card",
+  "version": "1.0.0",
+  "description": "購物車價格計算系統",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
