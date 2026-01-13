@@ -59,4 +59,46 @@ describe('價格計算系統', () => {
       });
     });
   });
+
+  describe('優惠券限制', () => {
+    test('3C 產品不能使用優惠券', () => {
+      // Arrange
+      const memberType = 'regular';
+      const inputAmount = 1000;
+      const coupon = { discount: 100 }; // 有優惠券
+      const productType = '3C'; // 3C 產品
+
+      // Act & Assert
+      expect(() => {
+        calculatePrice(memberType, inputAmount, coupon, productType);
+      }).toThrow('優惠券不能用於 3C 產品');
+    });
+
+    test('非 3C 產品可以使用優惠券', () => {
+      // Arrange
+      const memberType = 'regular';
+      const inputAmount = 1000;
+      const coupon = { discount: 100 }; // 100 元折扣券
+      const productType = 'clothing'; // 服飾類產品
+
+      // Act
+      const outputAmount = calculatePrice(memberType, inputAmount, coupon, productType);
+
+      // Assert
+      expect(outputAmount).toBe(900); // 1000 - 100 = 900
+    });
+
+    test('VIP 會員的 3C 產品也不能使用優惠券', () => {
+      // Arrange
+      const memberType = 'vip';
+      const inputAmount = 1000;
+      const coupon = { discount: 100 };
+      const productType = '3C';
+
+      // Act & Assert
+      expect(() => {
+        calculatePrice(memberType, inputAmount, coupon, productType);
+      }).toThrow('優惠券不能用於 3C 產品');
+    });
+  });
 });
